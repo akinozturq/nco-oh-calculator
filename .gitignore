@@ -1,0 +1,27 @@
+# Python build & cache artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
+ENV/
+build/
+dist/
+*.spec
+
+# Build scripts & OS shortcuts (EXCLUDED)
+*.bat
+*.ps1
+generate_pdf_manual.py
+
+# PDF / HTML / CSV output files
+*.pdf
+*.html
+*.csv
+*.json
+
+# IDE & Editor settings
+.vscode/
+.idea/
+.DS_Store
