@@ -18,29 +18,29 @@
 
 ## 📐 Kimyasal Formüller ve Hesaplama Mantığı
 
-Poliüretan (2K PU) tepkimesinde 1 mol hidroksil grubu ($-OH$), 1 mol izosiyanat grubu ($-NCO$) ile tepkimeye girerek üretan bağını oluşturur:
+Poliüretan (2K PU) tepkimesinde 1 mol hidroksil grubu (-OH), 1 mol izosiyanat grubu (-NCO) ile tepkimeye girerek üretan bağını oluşturur:
 
-$$\text{R-N=C=O} + \text{R'-OH} \longrightarrow \text{R-NH-COO-R'}$$
+$$\mathrm{R\text{-}N=C=O} + \mathrm{R'\text{-}OH} \longrightarrow \mathrm{R\text{-}NH\text{-}COO\text{-}R'}$$
 
-### 1. Hydroxyl (OH) Eşdeğer Molü ($\text{Eq}_{OH}$)
-$$\text{Eq}_{OH} = \frac{\text{Miktar (g)} \times \text{OH Değeri (mg KOH/g)}}{56110.0}$$
+### 1. Hydroxyl (OH) Eşdeğer Molü (Eq_OH)
+$$\mathrm{Eq_{OH}} = \frac{\text{Miktar (g)} \times \text{OH Değeri (mg KOH/g)}}{56110}$$
 *($56110 = M_{KOH} \text{ [56.11 g/mol]} \times 1000 \text{ [mg/g]}$)*
 
-### 2. Isocyanate (NCO) Eşdeğer Molü ($\text{Eq}_{NCO}$)
-$$\text{Eq}_{NCO} = \frac{\text{Miktar (g)} \times \left(\frac{\%NCO}{100}\right)}{42.02}$$
+### 2. Isocyanate (NCO) Eşdeğer Molü (Eq_NCO)
+$$\mathrm{Eq_{NCO}} = \frac{\text{Miktar (g)} \times \frac{\text{Serbest NCO \%}}{100}}{42.02}$$
 *($42.02 = M_{NCO} \text{ [g/mol]}$)*
 
 ### 3. İndeks ve Gereken Sertleştirici (B) Gramajı
-$$\text{Gereken Eq}_{NCO} = \text{Toplam Eq}_{OH} \times \text{NCO/OH İndeksi}$$
+$$\mathrm{Gereken\ Eq_{NCO}} = \mathrm{Toplam\ Eq_{OH}} \times \text{NCO/OH İndeksi}$$
 
-$$\text{Gereken Sertleştirici Kütlesi (B) [g]} = \frac{\text{Gereken Eq}_{NCO} \times 4202.0}{\text{Net } \%NCO}$$
+$$\text{Gereken Sertleştirici Kütlesi (B) [g]} = \frac{\mathrm{Gereken\ Eq_{NCO}} \times 4202}{\text{Net Serbest NCO \%}}$$
 
-### 4. Karışım Oranı ($100\text{g } A : B$)
-$$\text{Karışım Oranı (B [g])} = \left(\frac{\text{Gereken Sertleştirici (B)}}{\text{Toplam Polyol Kütlesi (A)}}\right) \times 100.0$$
+### 4. Karışım Oranı (100g A : B)
+$$\text{Karışım Oranı (B [g])} = \frac{\text{Gereken Sertleştirici (B)}}{\text{Toplam Polyol Kütlesi (A)}} \times 100$$
 
-### 5. Saf Moleküller İçin Teorik OH Değeri ($MW$ ve $f$)
-$$\text{OH Değeri (mg KOH/g)} = \frac{56110.0 \times f}{MW \text{ (g/mol)}}$$
-*(burada $f$ moleküldeki $-OH$ grubu sayısı, $MW$ ise molekül ağırlığıdır)*
+### 5. Saf Moleküller İçin Teorik OH Değeri (MW ve f)
+$$\text{OH Değeri (mg KOH/g)} = \frac{56110 \times f}{MW \text{ (g/mol)}}$$
+*(burada $f$ moleküldeki -OH grubu sayısı, $MW$ ise molekül ağırlığıdır)*
 
 ---
 
