@@ -181,6 +181,10 @@ class MainWindow(QMainWindow):
         self.btn_db_mgr.setCursor(Qt.CursorShape.PointingHandCursor)
         self.btn_db_mgr.clicked.connect(self._open_database_manager)
 
+        self.btn_load = QPushButton("📂 Reçete Yükle")
+        self.btn_load.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.btn_load.clicked.connect(self._on_load_recipe_clicked)
+
         self.btn_save = QPushButton("💾 Reçete Kaydet")
         self.btn_save.setCursor(Qt.CursorShape.PointingHandCursor)
         self.btn_save.clicked.connect(self._on_save_recipe_clicked)
@@ -195,6 +199,7 @@ class MainWindow(QMainWindow):
 
         top_bar.addWidget(self.btn_theme_toggle)
         top_bar.addWidget(self.btn_db_mgr)
+        top_bar.addWidget(self.btn_load)
         top_bar.addWidget(self.btn_save)
         top_bar.addWidget(self.btn_excel)
         top_bar.addWidget(self.btn_report)
@@ -420,8 +425,9 @@ class MainWindow(QMainWindow):
 
         # Action Buttons
         self.btn_db_mgr.setStyleSheet(f"background-color: {colors['accent_purple']}; font-weight: bold;")
+        self.btn_load.setStyleSheet(f"background-color: {colors['accent_cyan']}; font-weight: bold;")
         self.btn_save.setStyleSheet(f"background-color: {colors['accent_green']}; font-weight: bold;")
-        self.btn_excel.setStyleSheet(f"background-color: {colors['accent_cyan']}; font-weight: bold;")
+        self.btn_excel.setStyleSheet(f"background-color: {colors['accent_orange']}; font-weight: bold;")
         self.btn_report.setStyleSheet(f"background-color: {colors['accent_blue']}; font-weight: bold;")
         self.btn_lib_polyol.setStyleSheet(f"background-color: {colors['accent_purple']}; font-size: 12px; font-weight: bold; padding: 8px;")
         self.btn_lib_iso_row.setStyleSheet(f"background-color: {colors['accent_purple']}; font-size: 12px; font-weight: bold; padding: 8px;")
@@ -704,6 +710,57 @@ class MainWindow(QMainWindow):
                 self.lbl_selected_iso.setText(f"Seçilen Sertleştirici: {mat.name}")
 
     # ─── Recipe & Report Actions ────────────────────────────────────
+    def _on_load_recipe_clicked(self):
+        filepath, _ = QFileDialog.getOpenFileName(self, "JSON Reçete Yükle", "", "JSON Dosyaları (*.json)")
+        if not filepath:
+            return
+
+        try:
+            data = RecipeExporter.load_recipe_from_json(filepath)
+            self.current_recipe_name = data.get("recipe_name", "Yüklenen Reçete")
+
+            # Polyol (A Komponenti) tablosunu yükle
+            polyols_data = data.get("polyols", [])
+            self.table.blockSignals(True)
+            self.table.setRowCount(0)
+            self.table.blockSignals(False)
+
+            for p in polyols_data:
+                self._add_polyol_row(
+                    name=p.get("name", "Polyol"),
+                    amount=float(p.get("amount", 0.0)),
+                    oh_val=float(p.get("oh_value", 0.0)),
+                    solid=float(p.get("solid_content", 100.0))
+                )
+
+            # İzosiyanat (B Komponenti) ayarlarını yükle
+            iso_data = data.get("isocyanate", {})
+            self.spin_nco.setValue(float(iso_data.get("nco_percent", 31.5)))
+            self.spin_iso_solid.setValue(float(iso_data.get("solid_content", 100.0)))
+            self.spin_index.setValue(float(iso_data.get("index", 1.05)))
+
+            is_blend_mode = iso_data.get("is_blend_mode", True)
+            self.iso_tabs.setCurrentIndex(0 if is_blend_mode else 1)
+
+            if is_blend_mode:
+                isocyanates_data = iso_data.get("isocyanates", [])
+                self.iso_table.blockSignals(True)
+                self.iso_table.setRowCount(0)
+                self.iso_table.blockSignals(False)
+
+                for i in isocyanates_data:
+                    self._add_iso_row(
+                        name=i.get("name", "İzosiyanat"),
+                        amount=float(i.get("amount", 0.0)),
+                        nco_pct=float(i.get("nco_percent", 0.0)),
+                        solid=float(i.get("solid_content", 100.0))
+                    )
+
+            self._recalculate()
+            QMessageBox.information(self, "Başarılı", f"Reçete başarıyla yüklendi:\n{filepath}")
+        except Exception as e:
+            QMessageBox.critical(self, "Hata", f"Reçete yüklenirken hata oluştu:\n{e}")
+
     def _on_save_recipe_clicked(self):
         name, ok = QInputDialog.getText(self, "Reçete Kaydet", "Reçete Adı:", text=self.current_recipe_name)
         if not ok or not name.strip():

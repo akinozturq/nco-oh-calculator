@@ -1,5 +1,6 @@
 import json
 import csv
+import html
 from typing import List, Dict, Any, Optional
 from chemistry import PolyolItem, IsocyanateItem, CalculationResult
 
@@ -126,14 +127,15 @@ class RecipeExporter:
         isocyanates: Optional[List[IsocyanateItem]] = None
     ) -> str:
         """Yazdırılabilir veya kaydedilebilir HTML rapor çıktısı."""
+        safe_recipe_name = html.escape(recipe_name)
         polyol_rows_html = "".join([
-            f"<tr><td>{p.name}</td><td>{p.amount:.2f} g</td><td>{p.oh_value:.2f}</td><td>%{p.solid_content:.1f}</td><td>{p.eq_oh:.6f}</td></tr>"
+            f"<tr><td>{html.escape(p.name)}</td><td>{p.amount:.2f} g</td><td>{p.oh_value:.2f}</td><td>%{p.solid_content:.1f}</td><td>{p.eq_oh:.6f}</td></tr>"
             for p in polyols
         ])
 
         if res.is_iso_blend and isocyanates and len(isocyanates) > 0:
             iso_rows_html = "".join([
-                f"<tr><td>{i.name}</td><td>{i.amount:.2f} g/%</td><td>%{i.nco_percent:.2f}</td><td>%{i.solid_content:.1f}</td><td>{i.eq_nco:.6f}</td></tr>"
+                f"<tr><td>{html.escape(i.name)}</td><td>{i.amount:.2f} g/%</td><td>%{i.nco_percent:.2f}</td><td>%{i.solid_content:.1f}</td><td>{i.eq_nco:.6f}</td></tr>"
                 for i in isocyanates
             ])
             iso_section_html = f"""
@@ -164,7 +166,7 @@ class RecipeExporter:
 <html>
 <head>
 <meta charset="utf-8">
-<title>NCO/OH Stokiyometri Raporu - {recipe_name}</title>
+<title>NCO/OH Stokiyometri Raporu - {safe_recipe_name}</title>
 <style>
     body {{ font-family: 'Segoe UI', Arial, sans-serif; background: #f8fafc; color: #0f172a; padding: 30px; }}
     .card {{ background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); max-width: 800px; margin: 0 auto; }}
@@ -182,7 +184,7 @@ class RecipeExporter:
 <body>
 <div class="card">
     <h1>Poliüretan Stokiyometri Raporu</h1>
-    <p><strong>Reçete Adı:</strong> {recipe_name}</p>
+    <p><strong>Reçete Adı:</strong> {safe_recipe_name}</p>
     
     <h3>A Komponenti (Polyol / Reçine Blend)</h3>
     <table>

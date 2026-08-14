@@ -19,7 +19,9 @@ class PolyolItem:
 
     @property
     def solid_mass(self) -> float:
-        """Bileşendeki net katı madde kütlesi (g)."""
+        """Bileşendeki net katı madde kütlesi (g). Reaktif solventler (OH>0) reaksiyonda polimerleşerek kürülen filmde kalır."""
+        if self.oh_value > 0 and self.solid_content == 0.0:
+            return self.amount  # Reaktif solvent (DAA, MEG, PG) reaksiyon sonucu polimer katı film kütlesine katılır
         sc = max(0.0, min(100.0, self.solid_content))
         return self.amount * (sc / 100.0)
 
@@ -41,7 +43,9 @@ class IsocyanateItem:
 
     @property
     def solid_mass(self) -> float:
-        """Bileşendeki net katı madde kütlesi (g)."""
+        """Bileşendeki net katı madde kütlesi (g). Aktif izosiyanat bileşenleri polimerleşerek kürülen filmde kalır."""
+        if self.nco_percent > 0 and self.solid_content == 0.0:
+            return self.amount  # Aktif izosiyanat polimer katı film kütlesine katılır
         sc = max(0.0, min(100.0, self.solid_content))
         return self.amount * (sc / 100.0)
 
