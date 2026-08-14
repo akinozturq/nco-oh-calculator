@@ -18,29 +18,41 @@
 
 ## 📐 Kimyasal Formüller ve Hesaplama Mantığı
 
-Poliüretan (2K PU) tepkimesinde 1 mol hidroksil grubu (-OH), 1 mol izosiyanat grubu (-NCO) ile tepkimeye girerek üretan bağını oluşturur:
+Poliüretan (2K PU) reaksiyonunda 1 mol hidroksil grubu (-OH), 1 mol izosiyanat grubu (-NCO) ile reaksiyona girerek üretan bağını oluşturur:
 
-$$\mathrm{R\text{-}N=C=O} + \mathrm{R'\text{-}OH} \longrightarrow \mathrm{R\text{-}NH\text{-}COO\text{-}R'}$$
+```
+R-N=C=O + R'-OH  --->  R-NH-COO-R'  (Üretan Bağı)
+```
 
 ### 1. Hydroxyl (OH) Eşdeğer Molü (Eq_OH)
-$$\mathrm{Eq_{OH}} = \frac{\text{Miktar (g)} \times \text{OH Değeri (mg KOH/g)}}{56110}$$
-*($56110 = M_{KOH} \text{ [56.11 g/mol]} \times 1000 \text{ [mg/g]}$)*
+```
+Eq_OH = (Miktar [g] × OH Değeri [mg KOH/g]) / 56110.0
+```
+*Not: 56110 = KOH moleküler ağırlığı (56.11 g/mol) × 1000 mg/g*
 
 ### 2. Isocyanate (NCO) Eşdeğer Molü (Eq_NCO)
-$$\mathrm{Eq_{NCO}} = \frac{\text{Miktar (g)} \times \frac{\text{Serbest NCO \%}}{100}}{42.02}$$
-*($42.02 = M_{NCO} \text{ [g/mol]}$)*
+```
+Eq_NCO = (Miktar [g] × (Serbest % NCO / 100)) / 42.02
+```
+*Not: 42.02 = -NCO grubu moleküler ağırlığı (42.02 g/mol)*
 
 ### 3. İndeks ve Gereken Sertleştirici (B) Gramajı
-$$\mathrm{Gereken\ Eq_{NCO}} = \mathrm{Toplam\ Eq_{OH}} \times \text{NCO/OH İndeksi}$$
+```
+Gereken Eq_NCO = Toplam Eq_OH × NCO/OH İndeksi
 
-$$\text{Gereken Sertleştirici Kütlesi (B) [g]} = \frac{\mathrm{Gereken\ Eq_{NCO}} \times 4202}{\text{Net Serbest NCO \%}}$$
+Gereken Sertleştirici Kütlesi (B) [g] = (Gereken Eq_NCO × 4202.0) / Net % NCO
+```
 
 ### 4. Karışım Oranı (100g A : B)
-$$\text{Karışım Oranı (B [g])} = \frac{\text{Gereken Sertleştirici (B)}}{\text{Toplam Polyol Kütlesi (A)}} \times 100$$
+```
+Karışım Oranı (B [g]) = (Gereken Sertleştirici [g] / Toplam Polyol Kütlesi [g]) × 100.0
+```
 
 ### 5. Saf Moleküller İçin Teorik OH Değeri (MW ve f)
-$$\text{OH Değeri (mg KOH/g)} = \frac{56110 \times f}{MW \text{ (g/mol)}}$$
-*(burada $f$ moleküldeki -OH grubu sayısı, $MW$ ise molekül ağırlığıdır)*
+```
+OH Değeri (mg KOH/g) = (56110.0 × f) / MW [g/mol]
+```
+*(burada f: moleküldeki -OH grubu sayısı, MW: molekül ağırlığıdır)*
 
 ---
 
